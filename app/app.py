@@ -1,6 +1,6 @@
 from flask import Flask
 import json
-
+import uuid
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
@@ -41,7 +41,9 @@ def kafka_produce():
                 if data["lang"] == "en":
                     data = str({"content": data["text"]})
                     print("dumps", kafaTopic, data.encode("utf-8"))
-                    kafkaProducer.produce(kafaTopic, data.encode("utf-8"))
+                    kafkaProducer.produce(
+                        kafaTopic, key=str(uuid.uuid1()), value=data.encode("utf-8")
+                    )
                     kafkaProducer.flush()
                     print("ADDED:", data.encode("utf-8"))
 
