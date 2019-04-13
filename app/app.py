@@ -38,7 +38,7 @@ def kafka_produce():
             try:
                 data = json.loads(data)
                 if data["lang"] == "en":
-                    data = json.dumps({"content": data["text"].replace("'", "\"")})
+                    data = json.dumps({"content": data["text"].replace("'", '"')})
                     kafkaProducer.produce(
                         "content_curator_twitter", key=str(uuid.uuid4()), value=data
                     )
