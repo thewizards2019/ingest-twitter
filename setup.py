@@ -8,6 +8,9 @@ setuptools.setup(
     zip_safe=False,
     install_requires=[
         'Flask',
+        'tweepy',
+        'python-twitter',
+        'confluent_kafka',
     ],
     extras_require={
         'dev': [
@@ -15,7 +18,7 @@ setuptools.setup(
             'flake8',
             'pytest-cov',
             'bandit',
-            'black'
+            'black',
         ]
     },
     entry_points={
