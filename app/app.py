@@ -31,8 +31,7 @@ def create_app(config=None, testing=False, cli=True):
 
 
 def kafka_produce():
-    kafkaProducer = Producer(
-        {'bootstrap.servers': 'localhost:9092'})
+    kafkaProducer = Producer({"bootstrap.servers": "localhost:9092"})
     kafaTopic = "content_curator_twitter"
 
     class StdOutListener(StreamListener):
@@ -41,10 +40,10 @@ def kafka_produce():
                 data = json.loads(data)
                 if data["lang"] == "en":
                     data = str({"content": data["text"]})
-                    print("dumps", kafaTopic, data.encode('utf-8'))
-                    kafkaProducer.produce(kafaTopic, data.encode('utf-8'))
+                    print("dumps", kafaTopic, data.encode("utf-8"))
+                    kafkaProducer.produce(kafaTopic, data.encode("utf-8"))
                     kafkaProducer.flush()
-                    print("ADDED:", data.encode('utf-8'))
+                    print("ADDED:", data.encode("utf-8"))
 
                 return True
             except Exception as e:
@@ -53,8 +52,8 @@ def kafka_produce():
         def on_error(self, status):
             print("ERROR: ", status)
 
-    l = StdOutListener()
+    tweet_listener = StdOutListener()
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
-    stream = Stream(auth, l)
+    stream = Stream(auth, tweet_listener)
     stream.filter(track="content_curator_twitter")
