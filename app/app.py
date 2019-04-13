@@ -32,20 +32,18 @@ def create_app(config=None, testing=False, cli=True):
 
 def kafka_produce():
     kafkaProducer = Producer({"bootstrap.servers": "localhost:9092"})
-    kafaTopic = "content_curator_twitter"
 
     class StdOutListener(StreamListener):
         def on_data(self, data):
             try:
                 data = json.loads(data)
                 if data["lang"] == "en":
-                    data = str({"content": data["text"]})
-                    print("dumps", kafaTopic, data.encode("utf-8"))
+                    data = json.dumps({"content": data["text"].replace("'", "\"")})
                     kafkaProducer.produce(
-                        kafaTopic, key=str(uuid.uuid1()), value=data.encode("utf-8")
+                        "content_curator_twitter", key=str(uuid.uuid4()), value=data
                     )
                     kafkaProducer.flush()
-                    print("ADDED:", data.encode("utf-8"))
+                    print("ADDED:", data)
 
                 return True
             except Exception as e:
