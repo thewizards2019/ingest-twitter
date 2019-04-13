@@ -15,7 +15,12 @@ setuptools.setup(
             'flake8',
             'pytest-cov',
             'bandit',
-            'black'
+            'black',
+            'StreamListener',
+            'OAuthHandler',
+            'Stream',
+            'SimpleProducer',
+            'KafkaClient'
         ]
     },
     entry_points={
