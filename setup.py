@@ -8,6 +8,9 @@ setuptools.setup(
     zip_safe=False,
     install_requires=[
         'Flask',
+        'tweepy',
+        'python-twitter',
+        'confluent_kafka',
     ],
     extras_require={
         'dev': [
@@ -16,11 +19,6 @@ setuptools.setup(
             'pytest-cov',
             'bandit',
             'black',
-            'StreamListener',
-            'OAuthHandler',
-            'Stream',
-            'SimpleProducer',
-            'KafkaClient'
         ]
     },
     entry_points={
