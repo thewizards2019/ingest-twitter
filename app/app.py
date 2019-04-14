@@ -27,6 +27,8 @@ def create_app(config=None, testing=False, cli=True):
 
     kafka_produce()
 
+    app.port = 5001
+
     return app
 
 
